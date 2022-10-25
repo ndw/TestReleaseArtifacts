@@ -1,0 +1,24 @@
+defaultTasks 'buildTest'
+
+task buildTest {
+  doFirst {
+    mkdir "${buildDir}/stage"
+  }
+  doLast {
+    copy {
+      from "${projectDir}"
+      into "${buildDir}/stage"
+      include "build.gradle"
+      include "gradle.properties"
+    }
+  }
+}
+
+task dist(dependsOn: ["buildTest"], type: Zip) {
+  doFirst {
+    mkdir "${buildDir}/distributions"
+  }
+  archiveBaseName = "testrelease-${projectVersion}"
+  destinationDirectory = new File("${buildDir}/distributions")
+  from "${buildDir}/stage"
+}
