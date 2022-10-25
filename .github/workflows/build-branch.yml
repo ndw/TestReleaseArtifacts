@@ -53,7 +53,7 @@ jobs:
 
       - name: Build
         run: |
-          ./gradlew buildTest
+          ./gradlew dist
 
       - name: Deploy main to gh-pages
         if: ${{ env.HAVE_ACCESS_TOKEN == 'true' && env.CI_BRANCH == 'main' }}
@@ -68,6 +68,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: ${{ env.CI_TAG != '' }}
         with:
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: true
           files: |
-            README.md
             build/distributions/testrelease-${{ env.CI_TAG }}.zip
