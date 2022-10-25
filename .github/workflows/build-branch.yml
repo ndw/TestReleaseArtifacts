@@ -68,4 +68,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: ${{ env.CI_TAG != '' }}
         with:
-          files: build/distributions/testrelease-${{ env.CI_TAG }}.zip
+          files: |
+            README.md
+            build/distributions/testrelease-${{ env.CI_TAG }}.zip
