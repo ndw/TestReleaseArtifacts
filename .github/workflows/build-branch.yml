@@ -63,3 +63,9 @@ jobs:
           token: ${{ secrets.ACCESS_TOKEN }}
           branch: gh-pages
           target-folder: /
+
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        if: ${{ env.CI_TAG != '' }}
+        with:
+          files: build/distributions/testrelease-${{ env.CI_TAG }}.zip
